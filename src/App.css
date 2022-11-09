@@ -1,0 +1,14 @@
+
+:root{
+  --cell-size: 15px
+}
+.grid-container{
+  display: grid;
+  grid-template-columns: repeat(50, var(--cell-size));
+}
+
+.grid-cell{
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+}
