@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import "./App.css";
+import produce from 'immer'
 
 function App() {
     const numberOfRows = 50;
@@ -15,21 +16,64 @@ function App() {
 
     const [running, setRunning] = useState(false);
 
-    const runningRef = useRef()
-    runningRef.current = running
+    const runningRef = useRef();
+    runningRef.current = running;
 
-    const simulate = useCallback(()=>{
-      if(!runningRef.current){
-        return
-      }
-      setTimeout(simulate, 500)
-    },[])
+    const neighborsOperation = [
+        [0, -1],
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, 1],
+        [1, 1],
+        [1, 0],
+        [1, -1],
+    ];
+
+    const runSimulation = useCallback(() => {
+        if (!runningRef.current) {
+            return;
+        }
+
+        setGrid(g => {
+            return produce(g, gridCopy => {
+                for (let i = 0; i < numberOfRows; i++) {
+                    for (let k = 0; k < numberOfColumns; k++) {
+                        let neighbors = 0;
+                        neighborsOperation.forEach(([x, y]) => {
+                            const newI = i + x;
+                            const newK = k + y;
+                            if (newI >= 0 && newI < numberOfRows && newK >= 0 && newK < numberOfColumns) {
+                                neighbors += g[newI][newK];
+                            }
+                        });
+
+                        const isAboutToDie = neighbors < 2 || neighbors > 3
+                        const isAboutToReproduce = g[i][k] === 0 && neighbors === 3
+
+                        if (isAboutToDie) {
+                            gridCopy[i][k] = 0;
+                        } else if (isAboutToReproduce) {
+                            gridCopy[i][k] = 1;
+                        }
+                    }
+                }
+            });
+        });
+
+        setTimeout(runSimulation, 100);
+    }, []);
+
 
     return (
         <>
             <button
                 onClick={() => {
                     setRunning(!running);
+                    if (!running) {
+                        runningRef.current = true;
+                        runSimulation();
+                    }
                 }}
             >
                 {running ? "stop" : "start"}
