@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import "./App.css";
-import produce from 'immer'
+import produce from "immer";
 
 function App() {
     const numberOfRows = 50;
@@ -35,21 +35,27 @@ function App() {
             return;
         }
 
-        setGrid(g => {
-            return produce(g, gridCopy => {
+        setGrid((g) => {
+            return produce(g, (gridCopy) => {
                 for (let i = 0; i < numberOfRows; i++) {
                     for (let k = 0; k < numberOfColumns; k++) {
                         let neighbors = 0;
                         neighborsOperation.forEach(([x, y]) => {
                             const newI = i + x;
                             const newK = k + y;
-                            if (newI >= 0 && newI < numberOfRows && newK >= 0 && newK < numberOfColumns) {
+                            if (
+                                newI >= 0 &&
+                                newI < numberOfRows &&
+                                newK >= 0 &&
+                                newK < numberOfColumns
+                            ) {
                                 neighbors += g[newI][newK];
                             }
                         });
 
-                        const isAboutToDie = neighbors < 2 || neighbors > 3
-                        const isAboutToReproduce = g[i][k] === 0 && neighbors === 3
+                        const isAboutToDie = neighbors < 2 || neighbors > 3;
+                        const isAboutToReproduce =
+                            g[i][k] === 0 && neighbors === 3;
 
                         if (isAboutToDie) {
                             gridCopy[i][k] = 0;
@@ -64,7 +70,6 @@ function App() {
         setTimeout(runSimulation, 100);
     }, []);
 
-
     return (
         <>
             <button
@@ -78,8 +83,23 @@ function App() {
             >
                 {running ? "stop" : "start"}
             </button>
-            <button>random</button>
+
+            <button
+                onClick={() => {
+                    let gridCopy = [...grid];
+                    gridCopy.forEach((rows, r) => {
+                        rows.forEach((col, c) => {
+                            gridCopy[r][c] = Math.random() > 0.7 ? 1 : 0;
+                        });
+                    });
+                    setGrid(gridCopy);
+                }}
+            >
+                random
+            </button>
+
             <button>clear</button>
+
             <div className="grid-container">
                 {grid.map((rows, r) =>
                     rows.map((col, c) => (
