@@ -98,7 +98,20 @@ function App() {
                 random
             </button>
 
-            <button>clear</button>
+            <button
+                onClick={() => {
+                    setGrid(() => {
+                        // initializing 50X50 cells filled with 0
+                        const rows = [];
+                        for (let i = 0; i < numberOfRows; i++) {
+                            rows.push(Array(numberOfColumns).fill(0));
+                        }
+                        return rows;
+                    });
+                }}
+            >
+                clear
+            </button>
 
             <div className="grid-container">
                 {grid.map((rows, r) =>
