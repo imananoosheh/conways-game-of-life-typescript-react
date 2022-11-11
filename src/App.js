@@ -5,6 +5,7 @@ import produce from "immer";
 function App() {
     const numberOfRows = 50;
     const numberOfColumns = 50;
+    const [clickedCell, setClickedCell] = useState([])
     const [grid, setGrid] = useState(() => {
         // initializing 50X50 cells filled with 0
         const rows = [];
@@ -86,13 +87,18 @@ function App() {
 
             <button
                 onClick={() => {
-                    let gridCopy = [...grid];
-                    gridCopy.forEach((rows, r) => {
-                        rows.forEach((col, c) => {
-                            gridCopy[r][c] = Math.random() > 0.7 ? 1 : 0;
-                        });
+                    setGrid(() => {
+                        // initializing 50X50 cells filled with 0
+                        const rows = [];
+                        for (let i = 0; i < numberOfRows; i++) {
+                          let col = []
+                          for(let j=0; j<numberOfColumns;j++){
+                            col[j] = Math.random() > 0.7 ? 1 : 0
+                          }
+                          rows.push(col)
+                        }
+                        return rows;
                     });
-                    setGrid(gridCopy);
                 }}
             >
                 random
@@ -108,10 +114,33 @@ function App() {
                         }
                         return rows;
                     });
+                    setRunning(false)
                 }}
             >
                 clear
             </button>
+
+            <button onClick={()=>{
+              if(clickedCell !== []){
+                let gridCopy = [...grid]
+                const blinkerOperations = [
+                  [0,0,1],
+                  [0,1,1],
+                  [0,-1,1],
+                  [-1,0,0],
+                  [1,0,0],
+                  [-1,-1,0],
+                  [-1,1,0],
+                  [1,1,0],
+                  [1,-1,0],
+                ]
+                const [clickedX, clickedY] = clickedCell
+                blinkerOperations.forEach(([x,y,value]) =>{
+                  gridCopy[clickedX+x][clickedY+y] = value
+                })
+                setGrid(gridCopy)
+              }
+            }}>add blinker</button>
 
             <div className="grid-container">
                 {grid.map((rows, r) =>
@@ -122,6 +151,7 @@ function App() {
                             onClick={() => {
                                 let gridCopy = [...grid];
                                 gridCopy[r][c] = gridCopy[r][c] === 0 ? 1 : 0;
+                                setClickedCell([r,c])
                                 setGrid(gridCopy);
                             }}
                             style={{
