@@ -1,0 +1,2 @@
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;margin:0}code{font-family:source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace}:root{--cell-size:15px}.grid-container{display:grid;grid-template-columns:repeat(50,15px);grid-template-columns:repeat(50,var(--cell-size))}.grid-cell{border:1px solid #000;height:15px;height:var(--cell-size);width:15px;width:var(--cell-size)}
+/*# sourceMappingURL=main.06326c29.css.map*/

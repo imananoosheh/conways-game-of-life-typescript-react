@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/conways-game-of-life-typescript-react/static/css/main.06326c29.css",
+    "main.js": "/conways-game-of-life-typescript-react/static/js/main.577dcbaf.js",
+    "index.html": "/conways-game-of-life-typescript-react/index.html",
+    "main.06326c29.css.map": "/conways-game-of-life-typescript-react/static/css/main.06326c29.css.map",
+    "main.577dcbaf.js.map": "/conways-game-of-life-typescript-react/static/js/main.577dcbaf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.06326c29.css",
+    "static/js/main.577dcbaf.js"
+  ]
+}
