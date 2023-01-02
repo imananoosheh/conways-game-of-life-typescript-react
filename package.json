@@ -1,7 +1,7 @@
 {
   "name": "game-of-life",
   "version": "0.1.0",
-  "homepage": "",
+  "homepage": "http://imananoosheh.github.io/conways-game-of-life-typescript-react/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
